@@ -1,23 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Basic php +vuejs</title>
-    <!-- CSS only -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css" >
-<style>
-    [v-cloak] { display: none; }
-</style>
-</head>
+้<?php
+    include('service/templates/header.php');
+?>
 <body>
     <div id="app" class="container mt-5" v-cloak>
         <div class="row">
-            <div class="col-12 text-center">
-                <h3>{{ title }}</h3>
-                <h3>แสดงข้อมูล Customers</h3>
-            </div>
             <div class="col-12">
                 <table class="table table-hover table-bordered">
                     <thead>
@@ -52,7 +38,7 @@
 
 <!-- development version, includes helpful console warnings -->
 <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"></script>
 
 <script>
@@ -61,34 +47,24 @@
         data() {
             return {
                 title: "Hello Vuejs Basic",
-                customers: [{
-                    Cus_ID: "1",
-                    Cus_Name: "Dragon",
-                    Con_Name: "Nakrub",
-                    Address: "112",
-                    City: "Nakhon",
-                    PCode: "4646",
-                    Country: "Nakhon"
-                },{
-                    Cus_ID: "2",
-                    Cus_Name: "Dragon2",
-                    Con_Name: "Nakrub",
-                    Address: "112",
-                    City: "Nakhon",
-                    PCode: "4646",
-                    Country: "Nakhon"
-                }]
+                customers: []
             }
         },
         mounted() {
-            console.log(this.customers)
+            var vm = this
+            axios.get('http://127.0.0.1/vuejs/service/customers/')
+            .then(function(datas){
+                vm.customers = datas.data.response
+            })
+            .catch((err) => {
+                console.log(err)
+            })
         }
-        
     })
 
-
 </script>
-
-
+<?php
+    include('service/templates/footer.php');
+?>
 </body>
 </html>
